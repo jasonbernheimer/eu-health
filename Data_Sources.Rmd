@@ -18,7 +18,12 @@ head(df, 10)
 ```
 
 ```{r}
-unique(df$COU)
+countries <- unique(df$COU)
+
+countries
+
+db2 <- db %>%
+  filter(COU != "AUS" | COU != "CAN" |COU != "ISR" |COU != "JPN" |COU != "KOR" |COU != "MEX" |COU != "NZL" |COU != "USA" |COU != "BRA" |COU != "CHL" |COU != "CHN" |COU != "IND" |COU != "IDN" |COU != "RUS" |COU != "ZAF" |COU != "COL" |COU != "CRI")
 ```
 
 
