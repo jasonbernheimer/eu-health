@@ -8,3 +8,4 @@ _bookdown_files
 .Rapp.history
 data
 docs/*.md
+.Rdata
