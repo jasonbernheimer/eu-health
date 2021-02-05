@@ -43,6 +43,7 @@ OECD::search_dataset("Health")
 df <- OECD::get_dataset("HEALTH_REAC")
 save(df, file = "healthdata.Rdata")
 ```
+
 ```{r}
 # load data since it has already been saved in the project directory
 load("healthdata.Rdata")
