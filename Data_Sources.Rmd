@@ -40,8 +40,9 @@ OECD::search_dataset("Health")
 ```{r eval=FALSE, include=TRUE}
 # this is to get the data from OECD and save it to the directory
 # dont run this code unless there are issues with the data
-df <- OECD::get_dataset("HEALTH_REAC")
-save(df, file = "healthdata.Rdata")
+
+#     df <- OECD::get_dataset("HEALTH_REAC")
+#     save(df, file = "healthdata.Rdata")
 ```
 
 ```{r}
@@ -53,33 +54,45 @@ head(df, 10)
 ```{r}
 # Opens web browser. not very helpful.
 OECD::get_data_structure("HEALTH_REAC")
-```
 
+key <- get_data_structure("HEALTH_REAC")
 
-```{r}
-df %>%
-  unique(VAR)
+key_VAR <- key[["VAR"]]
 ```
 
 
 
 ```{r}
+# Deals with countries
 countries <- unique(df$COU)
 
-countries
-
-df %>%
-  filter(COU %in% c("AUS", "CAN", "ISR", "JPN", "KOR", "MEX", "NZL", "USA", "BRA", "CHL", "CHN", "IND", "IDN", "RUS", "ZAF", ))
-
-df2 <- df %>%
-  filter(COU != "AUS" & COU != "CAN" &COU != "ISR" &COU != "JPN" &COU != "KOR" &COU != "MEX" &COU != "NZL" &COU != "USA" &COU != "BRA" &COU != "CHL" &COU != "CHN" &COU != "IND" &COU != "IDN" &COU != "RUS" &COU != "ZAF" &COU != "COL" &COU != "CRI")
-
-countries <- unique(df2$COU)
-
-length(countries)
-
-
+COU_exclude <- c("AUS", "CAN", "ISR", "JPN", "KOR", "MEX", "NZL", "USA", "BRA", "CHL", "CHN", "IND", "IDN", "RUS", "ZAF", "COL", "CRI")
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
