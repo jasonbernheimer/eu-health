@@ -6,7 +6,11 @@ output: html_document
 ---
 
 ```{r setup, include=TURE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
 library(dplyr)
 library(ggplot2)
 library(ggvis)
@@ -52,34 +56,96 @@ head(df, 10)
 ```
 
 ```{r}
-# Opens web browser. not very helpful.
+# Data Definitions
 OECD::get_data_structure("HEALTH_REAC")
 
 key <- get_data_structure("HEALTH_REAC")
 
 key_VAR <- key[["VAR"]]
+key_UNIT <- key[["UNIT"]]
 ```
+
+
+Ignore this chunk:
+```{r}
+# USE ALL OECD COUNTRIES FOR NOW
+# countries <- unique(df$COU)
+# 
+# COU_exclude <- c("AUS", "CAN", "ISR", "JPN", "KOR", "MEX", "NZL", "USA", "BRA", "CHL", "CHN", "IND", "IDN", "RUS", "ZAF", "COL", "CRI")
+```
+
+```{r}
+# select only 2019 for ease of use for now
+mydata <- df %>%
+  filter(obsTime == 2019)
+
+# GPs
+mydata %>%
+  filter(VAR == "EMPLGENE" |VAR == "EMPLGENP"|VAR ==  "EMPLOTGP") %>%
+  filter(UNIT == "PERSMYNB" | UNIT == "PERMEDNB")
+key_UNIT %>%
+  filter(id == c("PERSMYNB", "PERMEDNB"))
+
+# Specialists
+mydata %>%
+  filter(VAR == "EMPLSPMP" |VAR == "EMPLGENP"|VAR ==  "EMPLOTGP") %>%
+  filter(UNIT == "PERSMYNB" | UNIT == "PERMEDNB")
+
+```
+
+
+Things to note about Physicians: 
+
+* `VAR` = `EMPLGENE`
+  + this is all that is needed because it is the combined general practitioners and will mitigate slight differences in deffinitions between the two sub categories `EMPLGENP` & `EMPLOTGP` or which `EMPLGENE` is the sum of the two.
+* `UNIT`
+  + `PERSMYNB` - Number of persons (head counts)
+  + `PERMEDNB` - % of physicians (head counts)
+    + this is impacted by `EMPLOTPH` so I will have to calculate my own percentages between **specified** GPs and Specialists rather than all doctors.
+
+`VAR`:
+
+* `EMPLOTPH` - Medical doctors not further defined
 
 
 
 ```{r}
-# Deals with countries
-countries <- unique(df$COU)
+temp <- df %>%
+  filter(obsTime == 2015) 
 
-COU_exclude <- c("AUS", "CAN", "ISR", "JPN", "KOR", "MEX", "NZL", "USA", "BRA", "CHL", "CHN", "IND", "IDN", "RUS", "ZAF", "COL", "CRI")
+temp <- mutate(temp, COU = as.factor(COU))
+
+levels(temp$COU)
 ```
 
+Years 2015, 2016, & 2017 all have 43 of the 44 countries total. 
+
+2017 is missing the *Czech Republic* and *Finland*, be sure to exclude *Russia*, *Indonesia*, and *South Africa* because they don't have full data.
+
+
+Now that I understand the data, let's make something actually useful:
+```{r}
+mydata <- df %>%
+  filter(obsTime == 2017) %>%
+  dplyr::select(-TIME_FORMAT)
 
 
 
+countries_no_data <- c("ZAF", "CZE", "FIN", "CHN", "IDN", "IND", "BRA", "JPN", "SVK")
+countries_keep <- c("AUS", "AUT", "BEL", "CAN", "CHE", "CHL", "COL", "CRI", "DEU", "DNK", "ESP", "EST", "FRA", "GBR", "GRC", "HUN", "IRL", "ISL", "ISR", "ITA", "KOR", "LTU", "LUX", "LVA", "MEX", "NLD", "NOR", "NZL", "POL", "PRT", "RUS", "SVN", "SWE", "TUR", "USA")
+
+mydata <- mydata %>%
+  filter(COU == countries_keep)
 
 
+mydata <- mydata %>%
+  filter(COU != "ZAF" & COU != "CZE" & COU != "FIN" & COU != "CHN" & COU != "IDN" & COU != "IND" & COU != "BRA" & COU != "JPN" & COU != "SVK")
 
+mydata <- mutate(mydata, COU = as.factor(COU))
 
-
-
-
-
+t <- levels(mydata$COU)
+t
+```
 
 
 
