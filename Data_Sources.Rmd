@@ -5,13 +5,7 @@ date: "2/1/2021"
 output: html_document
 ---
 
-```{r setup, include=TURE}
-knitr::opts_chunk$set(
-	echo = TRUE,
-	message = FALSE,
-	warning = FALSE
-)
-library(dplyr)
+``` {r}
 library(ggplot2)
 library(ggvis)
 library(ggthemes)
@@ -30,7 +24,7 @@ library(visdat)
 library(fuzzyjoin)
 library(stringdist)
 library(reclin)
-
+library(dplyr)
 # Data
 library(OECD)
 ```
@@ -47,15 +41,22 @@ OECD::search_dataset("Health")
 
 #     df <- OECD::get_dataset("HEALTH_REAC")
 #     save(df, file = "healthdata.Rdata")
+
+#     df2 <- OECD::get_dataset("SHA", start_time = 2017, end_time = 2017)
+#     save(df2, file = "healthcosts.Rdata")
 ```
 
 ```{r}
 # load data since it has already been saved in the project directory
+
 load("healthdata.Rdata")
-head(df, 10)
+
+load("healthcosts.Rdata")
+
+# head(df, 10)
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 # Data Definitions
 OECD::get_data_structure("HEALTH_REAC")
 
@@ -67,14 +68,14 @@ key_UNIT <- key[["UNIT"]]
 
 
 Ignore this chunk:
-```{r}
+```{r eval=FALSE, include=FALSE}
 # USE ALL OECD COUNTRIES FOR NOW
 # countries <- unique(df$COU)
 # 
 # COU_exclude <- c("AUS", "CAN", "ISR", "JPN", "KOR", "MEX", "NZL", "USA", "BRA", "CHL", "CHN", "IND", "IDN", "RUS", "ZAF", "COL", "CRI")
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 # select only 2019 for ease of use for now
 mydata <- df %>%
   filter(obsTime == 2019)
@@ -110,7 +111,7 @@ Things to note about Physicians:
 **are paediatricians specialists?** They are defined as specialists in the data but maybe we should change that? - if we did, we would have to remove CRI (Costa Rica) because they dont have that data.
 
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 temp <- df %>%
   filter(obsTime == 2015) 
 
@@ -125,97 +126,73 @@ Years 2015, 2016, & 2017 all have 43 of the 44 countries total.
 
 
 Now that I understand the data, let's make something actually useful:
+
+## Real Code
+
+**Health care employment data**
+
 ```{r}
-mydata <- df %>%
+doctors <- df %>%
   filter(obsTime == "2017") %>%
   dplyr::select(-TIME_FORMAT)
 
-countries_keep <- c("AUS", "AUT", "BEL", "CAN", "CHE", "CHL", "CRI", "DEU", "DNK", "ESP", "EST", "FRA", "GBR", "GRC", "HUN", "IRL", "ISL", "ISR", "ITA", "KOR", "LTU", "LUX", "LVA", "MEX", "NLD", "NOR", "NZL", "POL", "PRT", "SVN", "SWE", "TUR", "USA")
+countries_keep <- c("AUS", "AUT", "BEL", "CAN", "CHE", "CHL", "DEU", "DNK", "ESP", "EST", "FRA", "GBR", "GRC", "HUN", "IRL", "ISL", "ISR", "ITA", "KOR", "LTU", "LUX", "LVA", "MEX", "NLD", "NOR", "NZL", "POL", "PRT", "SVN", "SWE", "TUR", "USA")
 
-mydata <- mydata %>%
+doctors <- doctors %>%
   filter(COU %in% countries_keep)
 ```
 
 
 ```{r}
-mydata <- mydata %>%
+doctors <- doctors %>%
   filter(UNIT == "PERSMYNB")
   
-mydata <- mydata %>%
-  filter(VAR == "EMPLGENE" | VAR == "EMPLSPMP")
+doctors <- doctors %>%
+  filter(VAR == "EMPLGENE" | VAR == "EMPLSPMP") %>%
+  dplyr::select(-UNIT, -OBS_STATUS) %>%
+  spread(VAR, obsValue)
+
+doctors <- doctors %>%
+  rename(total_GPs = EMPLGENE, total_SPs = EMPLSPMP)
+
+doctors <- doctors %>%
+  mutate(pct_GP = total_GPs / (total_GPs + total_SPs))
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Eurostat
+**Health care cost data**
 
 ```{r}
-library(eurostat)
-```
-
-What functions are in the Eurostat package?
-
-| Function | Explanation |
-|----|--------------|
-|add_nuts_level|Add the statistical aggregation level to data frame|
-|check_access_to_data | Check access to ec.europe.eu|
-|clean_eurostat_cache | Clean Eurostat Cache|
-|cut_to_classes | Cuts the Values Column into Classes and Polishes the Labels|
-|dic_order | Order of Variable Levels from Eurostat Dictionary.|
-|eu_countries | Countries and Country Codes|
-|eurostat_geodata_60_2016| Geospatial data of Europe from Gisco in 1:60 million scale from year 2016|
-|eurostat-package  | R Tools for Eurostat open data|
-|eurotime2date  | Date Conversion from Eurostat Time Format|
-|eurotime2num  |Conversion of Eurostat Time Format to Numeric|
-|get_bibentry | Create A Data Bibliography|
-|get_eurostat  |Read Eurostat Data|
-|get_eurostat_dic  | Download Eurostat Dictionary|
-|get_eurostat_geospatial | Download Geospatial Data from GISCO|
-|get_eurostat_json| Get Data from Eurostat API in JSON|
-|get_eurostat_raw  |Download Data from Eurostat Database|
-|get_eurostat_toc |Download Table of Contents of Eurostat Data Sets|
-|harmonize_country_code| Harmonize Country Code|
-|harmonize_geo_code |Harmonize NUTS region codes that changed with the 'NUTS2016' definition|
-|label_eurostat |Get Eurostat Codes|
-|nuts_correspondence| Correspondence Table NUTS2013-NUTS2016|
-|recode_to_nuts_2013 |Recode geo labels and rename regions from NUTS2016 to NUTS2013|
-|recode_to_nuts_2016 |Recode geo labels and rename regions from NUTS2013 to NUTS2016|
-|regional_changes_2016 |Changes in regional boundaries NUTS2013-NUTS2016|
-|search_eurostat| Grep Datasets Titles from Eurostat|
-|tgs00026| Auxiliary Data|
-
-```{r}
-toc <- get_eurostat_toc()
-
-toc
+key2 <- get_data_structure("SHA")
 ```
 
 ```{r}
+costs <- df2 %>%
+  dplyr::select(-TIME_FORMAT)
 
+costs <- costs %>%
+  filter(LOCATION %in% countries_keep)
+
+costs <- costs %>%
+  filter(HP == "HPTOT" & HF == "HFTOT" & HC == "HCTOT")
+
+costs <- costs %>%
+  filter(MEASURE == "PARPIB" | MEASURE == "VRPPPR") %>%
+  dplyr::select(MEASURE, COU = LOCATION, obsTime, obsValue) %>%
+  spread(MEASURE, obsValue) %>%
+  rename(pct_GDP = PARPIB, per_capita = VRPPPR)
 ```
 
+Measures:
 
-Indicators: 
-HIHSI062004 - Current health care expenditure by all financing agents (total), as percentage of GDP 
-HIHSI062005 - Current health care expenditure by public sector, as percentage of GDP 
-HIHSI062007 - Current health care expenditure by household out-of-pocket payment, as percentage of GDP 
-HIHSI062008 - Current health care expenditure by voluntary health care payment schemes, as percentage of GDP 
-HIHSI063004 - Current health care expenditure by all financing agents, in millions of PPS 
-HIHSI063005 - Current health care expenditure by public sector, in millions of PPS 
-HIHSI063007 - Current health care expenditure by household out-of-pocket payment, in millions of PPS 
-HIHSI063008 - Current health care expenditure by voluntary health care payment schemes, in millions of PPS 
+* PARPIB - % of GDP
+* VRPPPR - Per capita, constant prices, constant PPPs, OECD base year
+
+HF, HP, & HC should all be "__TOT" but for some reason that's not working like it does in the excel...
+
+Figured out the issue: r only allowed for 1,000,000 obs. in df2 so I had to filter out the correct year as I originally loaded it.
+
+
+
+
 
