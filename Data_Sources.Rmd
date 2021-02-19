@@ -25,6 +25,8 @@ library(fuzzyjoin)
 library(stringdist)
 library(reclin)
 library(dplyr)
+library(pander)
+library(stargazer)
 # Data
 library(OECD)
 ```
@@ -192,7 +194,31 @@ HF, HP, & HC should all be "__TOT" but for some reason that's not working like i
 
 Figured out the issue: r only allowed for 1,000,000 obs. in df2 so I had to filter out the correct year as I originally loaded it.
 
+## Combine
 
+```{r}
+mydata <- left_join(doctors, dplyr::select(costs, -obsTime), by = "COU")
+```
+
+Model
+```{r}
+model1 <- lm(per_capita~pct_GP,data=mydata)
+model2 <- lm(pct_GDP~pct_GP,data=mydata)
+
+pander(summary(model1))
+pander(summary(model2))
+```
+```{r}
+mydata$yHat1 <- coef(model1)["(Intercept)"] + coef(model1)["pct_GP"] * mydata$pct_GP
+ggplot(mydata) + 
+  geom_point(aes(y=per_capita,x=pct_GP)) +
+  geom_abline(intercept = coef(model1)["(Intercept)"], slope = coef(model1)["pct_GP"], col="black")
+
+mydata$yHat2 <- coef(model2)["(Intercept)"] + coef(model2)["pct_GP"] * mydata$pct_GP
+ggplot(mydata) + 
+  geom_point(aes(y=pct_GDP,x=pct_GP)) +
+  geom_abline(intercept = coef(model2)["(Intercept)"], slope = coef(model2)["pct_GP"], col="black")
+```
 
 
 
