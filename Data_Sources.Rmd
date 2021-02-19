@@ -107,7 +107,7 @@ Things to note about Physicians:
 
 * `EMPLOTPH` - Medical doctors not further defined
 
-**are paediatricians specialists?** They are defined as specialists in the data but maybe we should change that?
+**are paediatricians specialists?** They are defined as specialists in the data but maybe we should change that? - if we did, we would have to remove CRI (Costa Rica) because they dont have that data.
 
 
 ```{r}
@@ -130,27 +130,10 @@ mydata <- df %>%
   filter(obsTime == 2017) %>%
   dplyr::select(-TIME_FORMAT)
 
-
-
-countries_no_data <- c("ZAF", "CZE", "FIN", "CHN", "IDN", "IND", "BRA", "JPN", "SVK")
 countries_keep <- c("AUS", "AUT", "BEL", "CAN", "CHE", "CHL", "CRI", "DEU", "DNK", "ESP", "EST", "FRA", "GBR", "GRC", "HUN", "IRL", "ISL", "ISR", "ITA", "KOR", "LTU", "LUX", "LVA", "MEX", "NLD", "NOR", "NZL", "POL", "PRT", "SVN", "SWE", "TUR", "USA")
 
 mydata <- mydata %>%
   filter(COU == countries_keep)
-
-
-mydata <- mydata %>%
-  filter(COU != "ZAF" & COU != "CZE" & COU != "FIN" & COU != "CHN" & COU != "IDN" & COU != "IND" & COU != "BRA" & COU != "JPN" & COU != "SVK")
-
-mydata <- mutate(mydata, COU = as.factor(COU))
-
-mydata <- mydata %>%
-  filter(COU == countries_keep)
-
-countries_keep <- as.factor(countries_keep)
-
-t <- levels(mydata$COU)
-t
 ```
 
 
