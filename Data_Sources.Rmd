@@ -127,15 +127,23 @@ Years 2015, 2016, & 2017 all have 43 of the 44 countries total.
 Now that I understand the data, let's make something actually useful:
 ```{r}
 mydata <- df %>%
-  filter(obsTime == 2017) %>%
+  filter(obsTime == "2017") %>%
   dplyr::select(-TIME_FORMAT)
 
 countries_keep <- c("AUS", "AUT", "BEL", "CAN", "CHE", "CHL", "CRI", "DEU", "DNK", "ESP", "EST", "FRA", "GBR", "GRC", "HUN", "IRL", "ISL", "ISR", "ITA", "KOR", "LTU", "LUX", "LVA", "MEX", "NLD", "NOR", "NZL", "POL", "PRT", "SVN", "SWE", "TUR", "USA")
 
 mydata <- mydata %>%
-  filter(COU == countries_keep)
+  filter(COU %in% countries_keep)
 ```
 
+
+```{r}
+mydata <- mydata %>%
+  filter(UNIT == "PERSMYNB")
+  
+mydata <- mydata %>%
+  filter(VAR == "EMPLGENE" | VAR == "EMPLSPMP")
+```
 
 
 
