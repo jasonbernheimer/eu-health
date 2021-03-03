@@ -5,7 +5,7 @@ date: "2/1/2021"
 output: html_document
 ---
 
-```{undefined message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(ggvis)
 library(ggthemes)
@@ -18,6 +18,7 @@ library(forcats)
 library(tidyr)
 library(lubridate)
 library(stringr)
+
 library(assertive.types)
 library(assertive)
 library(visdat)
@@ -140,7 +141,7 @@ Now that I understand the data, let's make something actually useful:
 **Health care employment data**
 
 ```{r}
-doctors <- df %>%
+doctors <- dr_df %>%
   filter(obsTime == "2017") %>%
   dplyr::select(-TIME_FORMAT)
 
@@ -165,6 +166,8 @@ doctors <- doctors %>%
 
 doctors <- doctors %>%
   mutate(pct_GP = total_GPs / (total_GPs + total_SPs))
+
+## look at priamry care per 100,000, or adding something as a control, etc. Mess around. DIFFERENT MEASURES OF PRIMARY CARE DOCTORS.
 ```
 
 
