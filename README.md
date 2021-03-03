@@ -21,3 +21,16 @@ Start looking at different OECD data and the things we can control for (could ma
 5) Results: present the results of your research. What is the answer to your research question? You should include table(s) of coefficients and some measure of significance (e.g., standard errors, *’s to indicate p-values). You should discuss the economic meaning of your results. That is, do not simply report a coefficient of 0.123. You need to interpret what 0.123 means, explain if it is statistically significant, and explain what real-world importance it carries (e.g., is 0.123 a lot or a little in the context of your question?). What are the limitations of your results? For example, are you missing a key variable that might impact your results? If so, what are you missing and how might this impact your results (e.g., would your results be “weaker” or “stronger” if you had the missing key variable)?
 
 6) Conclusion: summarize your research question and answer, and briefly discuss areas of potential further research.
+
+
+List of ideas for other variables:
+- public/private healthcare or social protection
+- childhood vaccination rates
+- age/life expetency
+- health education programs
+- avoidable deaths
+- prices of health equipment
+- obesity/bad health
+- 
+
+How many of these are accounted for by country fixed effects?
