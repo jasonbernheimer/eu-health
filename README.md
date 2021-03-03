@@ -4,6 +4,8 @@ Well hello friends!
 
 Our Research Question: Does the proportion of primary care providers have an impact on health care spending on a country level basis. 
 
+Conjecture: More primary care providers = less health care spending
+
 Start looking at different OECD data and the things we can control for (could maybe do for between years as well).
 
 1) Introduction: introduces the general topic, specifies your specific research question, and discusses briefly how you answer it and your findings.
