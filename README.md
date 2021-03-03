@@ -34,3 +34,12 @@ List of ideas for other variables:
 - 
 
 How many of these are accounted for by country fixed effects?
+
+
+To Do: ONLY LOOK AT 2015-2017
+
+Figuring out what countries have all the data we need. Jason shared excel sheets with us. 
+
+"this is to get data from oecd and save it to the directory" 
+
+DF2 is huge
