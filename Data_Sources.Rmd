@@ -41,8 +41,8 @@ OECD::search_dataset("Health")
 # this is to get the data from OECD and save it to the directory
 # dont run this code unless there are issues with the data
 
-#     dr_df <- OECD::get_dataset("HEALTH_REAC")
-#     save(dr_df, file = "doctordata.Rdata")
+ dr_df <- OECD::get_dataset("HEALTH_REAC")
+  save(dr_df, file = "doctordata.Rdata")
 
 #     cost2017 <- OECD::get_dataset("SHA", start_time = 2017, end_time = 2017)
 #     save(cost2017, file = "costs17.Rdata")
