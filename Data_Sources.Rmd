@@ -5,7 +5,7 @@ date: "2/1/2021"
 output: html_document
 ---
 
-``` {r}
+```{undefined message=FALSE, warning=FALSE}
 library(ggplot2)
 library(ggvis)
 library(ggthemes)
