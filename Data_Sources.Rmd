@@ -5,7 +5,7 @@ date: "2/1/2021"
 output: html_document
 ---
 
-``` {r}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(ggvis)
 library(ggthemes)
@@ -18,6 +18,7 @@ library(forcats)
 library(tidyr)
 library(lubridate)
 library(stringr)
+
 library(assertive.types)
 library(assertive)
 library(visdat)
@@ -41,8 +42,8 @@ OECD::search_dataset("Health")
 # this is to get the data from OECD and save it to the directory
 # dont run this code unless there are issues with the data
 
-#     dr_df <- OECD::get_dataset("HEALTH_REAC")
-#     save(dr_df, file = "doctordata.Rdata")
+# dr_df <- OECD::get_dataset("HEALTH_REAC")
+#  save(dr_df, file = "doctordata.Rdata")
 
 #     cost2017 <- OECD::get_dataset("SHA", start_time = 2017, end_time = 2017)
 #     save(cost2017, file = "costs17.Rdata")
@@ -57,9 +58,10 @@ OECD::search_dataset("Health")
 ```{r}
 # load data since it has already been saved in the project directory
 
-load("healthdata.Rdata")
-
-load("healthcosts.Rdata")
+load("doctordata.Rdata")
+load("costs15.Rdata")
+load("costs16.Rdata")
+load("costs17.Rdata")
 
 # head(df, 10)
 ```
@@ -140,7 +142,7 @@ Now that I understand the data, let's make something actually useful:
 **Health care employment data**
 
 ```{r}
-doctors <- df %>%
+doctors <- dr_df %>%
   filter(obsTime == "2017") %>%
   dplyr::select(-TIME_FORMAT)
 
@@ -165,6 +167,8 @@ doctors <- doctors %>%
 
 doctors <- doctors %>%
   mutate(pct_GP = total_GPs / (total_GPs + total_SPs))
+
+## look at priamry care per 100,000, or adding something as a control, etc. Mess around. DIFFERENT MEASURES OF PRIMARY CARE DOCTORS.
 ```
 
 

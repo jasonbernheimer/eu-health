@@ -38,8 +38,18 @@ How many of these are accounted for by country fixed effects?
 
 To Do: ONLY LOOK AT 2015-2017
 
-Figuring out what countries have all the data we need. Jason shared excel sheets with us. 
+Look for what make sense to measure, for all the countries we need (most should be listed in line 147 as countries Keep). Jason already did this for the ratio of primary care to specialists (can see on line 194 in measures)
 
-"this is to get data from oecd and save it to the directory" 
+Write down variable codes! 
 
-DF2 is huge
+Un-commment and run the lines:
+
+44-48 Nora
+
+50-51 Bella
+
+53-54 Jason
+
+Then look through cost table and look at variables
+
+Maps!! We gotta make global maps :) Nora has got it. We just need country lines, don't need state or county data. OECD 3 digit country code called "location" will need to match with map
