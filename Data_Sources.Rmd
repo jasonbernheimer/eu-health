@@ -58,9 +58,10 @@ OECD::search_dataset("Health")
 ```{r}
 # load data since it has already been saved in the project directory
 
-load("healthdata.Rdata")
-
-load("healthcosts.Rdata")
+load("doctordata.Rdata")
+load("costs15.Rdata")
+load("costs16.Rdata")
+load("costs17.Rdata")
 
 # head(df, 10)
 ```
@@ -198,6 +199,21 @@ Measures:
 
 * PARPIB - % of GDP
 * VRPPPR - Per capita, constant prices, constant PPPs, OECD base year
+* PARPIB - Share of gross domestic product	
+* PARCUR - Share of current expenditure on health	
+* MTMOPP Current prices, current PPPs	
+* REPPER Per capita, constant prices, OECD base year	
+* VRPPPT Constant prices, constant PPPs, OECD base year	
+* PPPPER Per capita, current prices, current PPPs	
+* VRPPPR Per capita, constant prices, constant PPPs, OECD base year	
+* MLLNCU Current prices	
+* VALREL Constant prices, OECD base year	
+* UNPPER Per capita, current prices	
+* PARHC Share of function	
+* PARHP Share of provider	
+* PARHF Share of financing scheme	
+
+PARHC, PARHP, PARHF are missing measurements for countries: CHL, AZ, BE. 
 
 HF, HP, & HC should all be "__TOT" but for some reason that's not working like it does in the excel...
 
