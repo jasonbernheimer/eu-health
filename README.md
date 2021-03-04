@@ -53,3 +53,12 @@ Un-commment and run the lines:
 Then look through cost table and look at variables
 
 Maps!! We gotta make global maps :) Nora has got it. We just need country lines, don't need state or county data. OECD 3 digit country code called "location" will need to match with map
+
+Notes: 
+1. Health spending: measures the final consumption of health care goods and services (i.e. current health expenditure) including personal health care (curative care, rehabilitative care, long-term care, ancillary services and medical goods) and collective services (prevention and public health services as well as health administration), but excluding spending on investments. Health care is financed through a mix of financing arrangements including government spending and compulsory health insurance (“Government/compulsory”) as well as voluntary health insurance and private funds such as households’ out-of-pocket payments, NGOs and private corporations (“Voluntary”). This indicator is presented as a total and by type of financing (“Government/compulsory”, “Voluntary”, “Out-of-pocket”) and is measured as a share of GDP, as a share of total health spending and in USD per capita (using economy-wide PPPs).
+
+2. Health expenditure and financing: Health spending by disease
+This dataset presents data on expenditure by disease, age and gender under the System of Health Accounts (SHA) Framework. Current health spending by disease (ICD) includes inpatient/hospital spending by disease, outpatient/ambulatory spending by disease, medical goods spending by disease, and current health spending by age.
+https://www.oecd-ilibrary.org/social-issues-migration-health/data/health-expenditure-and-financing/health-spending-by-disease_beeaad76-en. Have to download datasets for each years. 
+
+3. 

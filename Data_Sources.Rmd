@@ -199,6 +199,21 @@ Measures:
 
 * PARPIB - % of GDP
 * VRPPPR - Per capita, constant prices, constant PPPs, OECD base year
+* PARPIB - Share of gross domestic product	
+* PARCUR - Share of current expenditure on health	
+* MTMOPP Current prices, current PPPs	
+* REPPER Per capita, constant prices, OECD base year	
+* VRPPPT Constant prices, constant PPPs, OECD base year	
+* PPPPER Per capita, current prices, current PPPs	
+* VRPPPR Per capita, constant prices, constant PPPs, OECD base year	
+* MLLNCU Current prices	
+* VALREL Constant prices, OECD base year	
+* UNPPER Per capita, current prices	
+* PARHC Share of function	
+* PARHP Share of provider	
+* PARHF Share of financing scheme	
+
+PARHC, PARHP, PARHF are missing measurements for countries: CHL, AZ, BE. 
 
 HF, HP, & HC should all be "__TOT" but for some reason that's not working like it does in the excel...
 
