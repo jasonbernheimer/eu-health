@@ -33,6 +33,11 @@ List of ideas for other variables:
 - obesity/bad health
 - 
 
+WHAT MAKES THE COUNTRY UNIQUE THAT DOES NOT CHANGE OVER TIME = COUNTRY FIXED EFFECTS
+
+**so still add in things that change year to year, because things don't change by the same amount in each country year by year. So need to include as controls.**
+
+
 How many of these are accounted for by country fixed effects?
 
 
